@@ -12,8 +12,11 @@ def main():
 @app.route('/iris_result',methods=['POST'])
 def iris_result():
     flowers = ['setosa', 'versicolor', 'virginica']
+    #               0           1           2
     model = load_model('C:/workspace3/model/iris/iris.h5')
+    #           신경망 모델
     a = float(request.form['a'])
+    #   스트링 => 실수형 변환
     b = float(request.form['b'])
     c = float(request.form['c'])
     d = float(request.form['d'])

@@ -3,6 +3,7 @@ from keras.models import load_model
 from joblib import load
 
 app = Flask(__name__)
+#       플라스크 앱 생성
 
 @app.route('/',methods=['GET'])
 def main():
@@ -11,6 +12,7 @@ def main():
 @app.route('/result',methods=['POST'])
 def result():
     model = load_model('c:/workspace3/model/titanic/titanic.h5')
+    #           신경망 모델 불러오기
     sex = request.form['sex']
     if sex=="male":
         male=1
@@ -38,6 +40,7 @@ def result():
     parch = int(request.form['parch'])
     fare = float(request.form['fare'])
     test_set = [[pclass1, pclass2, pclass3, male,female,age, sibsp, parch, fare]]
+    #           2차원 배열
 
     #파일로 저장된 스케일러 로딩
     scaler=load('c:/workspace3/model/scaler.model')
@@ -46,6 +49,7 @@ def result():
     test_set=scaler.transform(test_set)
 
     rate= model.predict(test_set)
+    #     0.0 ~ 1.0
     if rate>=0.5:
         result='생존'
     else:
@@ -54,5 +58,6 @@ def result():
                            rate='{:.2f}%'.format(rate[0][0]*100), result=result, sex=gender, pclass=pclass, age=age, sibsp=sibsp, parch=parch, fare=fare)
 
 if __name__ == '__main__':
+    # 시작
     #http://127.0.0.1로 할 것
     app.run(port=8000, threaded=False)
