@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'memo',
     'book',
     'transaction',
+    'procedure',
 ]
 
 MIDDLEWARE = [
