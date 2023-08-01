@@ -43,10 +43,15 @@ def insert_emp(request):
 def list_memo_p(request):
     try:
         with cx_Oracle.connect("python/1234@localhost:1521/xe") as conn:
+#                                아이디/비번@호스트:포트/DB
             with conn.cursor() as cursor:
+#                       커서 : 레코드 셋
                 ref_cursor = conn.cursor()
+#                       커서 생성
                 cursor.callproc('memo_list_p', [ref_cursor])
+#                                               레코드셋의 주소 전달
                 rows = ref_cursor.fetchall()
+#                           리스트로 저장
     except Exception as e:
         print(e)
 
@@ -55,10 +60,13 @@ def list_memo_p(request):
 def insert_memo_p(request):
     try:
         with cx_Oracle.connect("python/1234@localhost:1521/xe") as conn:
+            #                    아이디/비번@호스트:포트/db
             with conn.cursor() as cursor:
+                # 커서 : 레코드셋
                 writer = request.POST['writer']
                 memo = request.POST['memo']
                 cursor.callproc('memo_insert_p', [writer, memo])
+#                      프로시저 호출(callproc('프로시저이름', [전달값]))
                 conn.commit()
     except Exception as e:
         print(e)
@@ -72,7 +80,9 @@ def view_memo_p(request):
                 idx = request.GET['idx']
                 ref_cursor = conn.cursor()
                 cursor.callproc('memo_view_p', [idx, ref_cursor])
+                #                프로시저 호출
                 row = ref_cursor.fetchone()
+                #                리스트로 저장
     except Exception as e:
         print(e)
 
