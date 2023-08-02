@@ -93,6 +93,7 @@ pool3 = GlobalMaxPool1D()(conv3)
 
 # 3,4,5gram 이후 합치기(n gram)
 concat = concatenate([pool1, pool2, pool3])
+#           이종결합
 
 hidden = Dense(128, activation=tf.nn.relu)(concat)
 dropout_hidden = Dropout(rate=dropout_prob)(hidden)
