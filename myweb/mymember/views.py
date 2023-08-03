@@ -19,17 +19,18 @@ def login(request):
         passwd = request.POST['passwd']
         passwd = hashlib.sha256(passwd.encode()).hexdigest()
 #                        비번 암호화
-        row = Member.objects.filter(userid=userid, passwd=passwd)[0]
+        row = Member.objects.filter(userid=userid, passwd=passwd)
 #                               검색
-        if row is not None:     # 로그인 성공
+        if len(row)>0:     # 로그인 성공
+            row = Member.objects.filter(userid=userid, passwd=passwd)[0]
             request.session['userid'] = userid  # 세션에 등록
             request.session['name'] = row.name
             return render(request, 'mymember/main.html')
         else:                   # 로그인 실패
             return render(request, 'mymember/login.html',
-                          {'msg': '아이디 또는 비밀번호가 일치하지 않습니다.'})
+                          {'msg': '아이디 또는 비밀번호가 일치하지 않습니다.'})   # 로그인 화면
     else:
-        return render(request, 'mymember/login.html')   # 로그인 화면
+        return render(request, 'mymember/login.html')
 
 def join(request):
     if request.method == 'POST':

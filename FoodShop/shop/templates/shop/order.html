@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(function(){
+            $("#button1").click(function(){
+                const q=$("#question").val();
+                console.log('q:',q);
+                $.ajax({                                # sync    동기식    - 순서대로 실행 / async    비동기식    - 동시에 실행
+                    url: '/query',                      # 백그라운드 실행 주소
+                    data: 'question='+q,                # 서버에 전달할 데이터
+                    success:function(txt){              # 처리가 완료된 후 실행(콜백 함수)   /   response text 응답 텍스트
+                        console.log(txt);
+                        $("#div1").html(txt);           # id가 div1인 태그 내부에 html 형식으로 출력
+                    }
+                });
+            });
+        });
+        function delete_chat(){
+            if(confirm('모든 내용을 삭제하시겠습니까?')){
+                location.href='delete_chat';
+            }
+        }
+    </script>
+</head>
+<body>
+챗봇 서비스입니다.
+    <input type="text" id="question">
+    <input type="button" id="button1" value="확인">
+    <input type="button" onclick="delete_chat()" value="삭제">
+    <div id="div1"></div>
+</body>
+</html>
