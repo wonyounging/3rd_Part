@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from mytest.views import ch01, ch02, ch03
+from mytest.views import ch01, ch02, ch03, ch04
 
 #override handler404 and handler500
 handler404 = "mytest.views.error.error404"
@@ -34,4 +34,10 @@ urlpatterns = [
     path('del_cookie/', ch03.del_cookie),
     path('change_cookie/', ch03.change_cookie),
     path('counter/', ch03.counter),
+
+    path('session_main/', ch04.session_main),
+    path('set_session/', ch04.set_session),
+    path('clear_session/', ch04.clear_session),
+    path('change_session/', ch04.change_session),
+    path('session_counter/', ch04.session_counter),
 ]
