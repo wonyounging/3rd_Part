@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from mytest.views import ch01, ch02, ch03, ch04
 
 #override handler404 and handler500
@@ -40,4 +40,6 @@ urlpatterns = [
     path('clear_session/', ch04.clear_session),
     path('change_session/', ch04.change_session),
     path('session_counter/', ch04.session_counter),
+
+    path('guestbook/', include('guestbook.urls')),
 ]
