@@ -42,4 +42,6 @@ urlpatterns = [
     path('session_counter/', ch04.session_counter),
 
     path('guestbook/', include('guestbook.urls')),
+
+    path('member/', include('member.urls')),
 ]
