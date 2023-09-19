@@ -1,11 +1,14 @@
 import os.path
-from django.shortcuts import HttpResponse
+from django.shortcuts import HttpResponse, render
 from shop.models import Product
 from shop import ProductSerializer as ps
 import simplejson
 from django.views.decorators.csrf import csrf_exempt
 
 UPLOAD_DIR = os.path.dirname(__file__) + '/static/images/'
+
+def home(request):
+    return render(request, "index.html")
 
 def list(request):
     try:
@@ -40,3 +43,28 @@ def detail(request, product_code):
     row = Product.objects.get(product_code=product_code)
     serializer = ps.ProductSerializer(row)
     return HttpResponse(simplejson.dumps(serializer.data))
+
+@csrf_exempt
+def update(request):
+    product_code = request.POST['product_code']
+    row_src = Product.objects.get(product_code=product_code)
+    filename = row_src.filename
+
+    if "img" in request.FILES:
+        file = request.FILES["img"]
+        filename = file._name
+        fp = open("%s%s" % (UPLOAD_DIR, filename), "wb")
+        for chunk in file.chunks():
+            fp.write(chunk)
+        fp.close()
+
+    row_new = Product(product_code=product_code,
+                  product_name=request.POST["product_name"],
+                  description=request.POST["description"],
+                  price=request.POST["price"],
+                  filename=filename)
+    row_new.save()
+
+@csrf_exempt
+def delete(request):
+    Product.objects.get(product_code=request.GET["product_code"]).delete()

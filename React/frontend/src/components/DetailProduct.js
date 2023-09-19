@@ -36,6 +36,7 @@ function DetailProduct() {
     } else {
         let src='';
         let image_url = '';
+        console.log('filename:'+data.filename);
         if (data.filename !== '-') {
             src = `http://localhost/static/images/${data.filename}`;
             image_url = `<img src=${src} width='300px' height='300px' />`;
@@ -68,6 +69,31 @@ function DetailProduct() {
                         </tr>
                         <tr>
                             <td colSpan='2' align='center'>
+                                <button type='button' onClick={() => {
+                                    const form = new FormData();
+                                    form.append('product_code', data.product_code);
+                                    form.append('product_name', product_name.current.value);               
+                                    form.append('price', price.current.value);
+                                    form.append('description', description.current.value);
+                                    form.append('img', img.current.files[0]);
+                                    fetch('http://localhost/update', {
+                                      method: 'post',
+                                      encType: 'multipart/form-data',
+                                      body: form
+                                    }).then(() => {
+                                      navigate('/');
+                                    });
+                                }
+                                }>수정</button>
+                                &nbsp; 
+                                <button type='button' onClick={() => {
+                                    if (window.confirm('삭제할까요?')) {
+                                        fetch(`http://localhost/delete?product_code=${data.product_code}`, { method: 'delete' })
+                                            .then(() => { navigate('/'); });
+                                    }
+                                }
+                                }>삭제</button>
+                                &nbsp;
                                 <button onClick={() => navigate('/')}>목록</button>
                             </td>
                         </tr>
