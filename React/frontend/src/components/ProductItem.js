@@ -4,7 +4,7 @@ import './main.css'
 
 function ProductItem({ product_code, product_name, price, filename }) {
   let loading = false;
-  const url = `http://localhost/static/images/${filename}`;
+  const url = `http://192.168.36.128/static/images/${filename}`;
   if (loading) {
     return (
       <div>loading</div>

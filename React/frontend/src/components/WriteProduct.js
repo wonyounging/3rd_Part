@@ -41,7 +41,7 @@ function WriteProduct() {
                 form.append('price', price.current.value);
                 form.append('description', description.current.value);
                 form.append('img', img.current.files[0]);
-                fetch('http://localhost/insert', {  //  서버 호출
+                fetch('http://192.168.36.128/insert', {  //  서버 호출
                   method: 'post',
                   encType: 'multipart/form-data',   // 첨부파일 포함
                   body: form
