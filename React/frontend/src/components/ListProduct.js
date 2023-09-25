@@ -16,7 +16,7 @@ function ListProduct() {
 //     응답 출력함수
       .then(data => { setProductList(data); });
   }
-  useEffect(() => { getList('http://192.168.36.128/list'); }, []);
+  useEffect(() => { getList('http://192.168.36.129/list'); }, []);
 //          (입력) => {출력}
 
   return (
@@ -24,7 +24,7 @@ function ListProduct() {
         <h2>상품목록</h2>
         상품명: <input name='product_name' ref={product_name} />
         <button type='button' onClick={() => {
-        getList(`http://192.168.36.128/list?product_name=${product_name.current.value}`)
+        getList(`http://192.168.36.129/list?product_name=${product_name.current.value}`)
         }}>조회</button>
         <br /><br />
         <button onClick={() => navigate('/write')}>상품등록</button>

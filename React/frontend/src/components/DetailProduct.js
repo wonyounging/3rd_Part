@@ -21,7 +21,7 @@ function useFetch(url) {
 
 function DetailProduct() {
     const paths = window.location.href.split('/');
-    const url = 'http://192.168.36.128/' + paths[paths.length - 2] + '/' + paths[paths.length - 1];
+    const url = 'http://192.168.36.129/' + paths[paths.length - 2] + '/' + paths[paths.length - 1];
     const [data, loading] = useFetch(url);
     const navigate = useNavigate();
     const product_name = useRef();
@@ -38,7 +38,7 @@ function DetailProduct() {
         let image_url = '';
         console.log('filename:'+data.filename);
         if (data.filename !== '-') {
-            src = `http://192.168.36.128/static/images/${data.filename}`;
+            src = `http://192.168.36.129/static/images/${data.filename}`;
             image_url = `<img src=${src} width='300px' height='300px' />`;
         } else {
             image_url='';
@@ -76,7 +76,7 @@ function DetailProduct() {
                                     form.append('price', price.current.value);
                                     form.append('description', description.current.value);
                                     form.append('img', img.current.files[0]);
-                                    fetch('http://192.168.36.128/update', {
+                                    fetch('http://192.168.36.129/update', {
                                       method: 'post',
                                       encType: 'multipart/form-data',
                                       body: form
@@ -88,7 +88,7 @@ function DetailProduct() {
                                 &nbsp; 
                                 <button type='button' onClick={() => {
                                     if (window.confirm('삭제할까요?')) {
-                                        fetch(`http://192.168.36.128/delete?product_code=${data.product_code}`, { method: 'delete' })
+                                        fetch(`http://192.168.36.129/delete?product_code=${data.product_code}`, { method: 'delete' })
                                             .then(() => { navigate('/'); });
                                     }
                                 }
